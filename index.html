@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bank Application</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 30px;
+        }
+
+        button {
+            margin: 10px;
+            padding: 8px 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+
+</head>
+
+<body>
+
+    <h2>Bank Application</h2>
+
+    <button onclick="createAccount()">Create Account<button>
+    <button onclick="deposit()">Deposit<button>
+    <button onclick="withdraw()">Withdraw<button>
+    <button onclick="displayBalance()">Display Balance<button>
+
+</body>
+<script>
+    // create a new account
+    function createAccount() {
+        var accountName = prompt("Enter account name:");
+        var initialBalance = parseFloat(prompt("Enter initial balance:"));
+
+        // Check input is valid
+        if (!accountName || isNaN(initialBalance) || initialBalance <= 0) {
+            alert("Invalid input. Please enter valid account name and initial balance.");
+            return;
+        }
+
+        // Store account details in local storage
+        localStorage.setItem(accountName, initialBalance);
+        alert("Account created successfully!");
+    }
+
+    // deposit funds into the account
+    function deposit() {
+        var accountName = prompt("Enter account name:");
+        var amount = parseFloat(prompt("Enter amount to deposit:"));
+
+        // Check input is valid
+        if (!accountName || isNaN(amount) || amount <= 0) {
+            alert("Invalid input. Please enter valid account name and deposit amount.");
+            return;
+        }
+
+        var currentBalance = parseFloat(localStorage.getItem(accountName));
+
+        // Check account exists
+        if (isNaN(currentBalance)) {
+            alert("Account does not exist.");
+            return;
+        }
+
+        // Update balance and store in local storage
+        currentBalance += amount;
+        localStorage.setItem(accountName, currentBalance);
+        alert("Deposit successful! New balance: " + currentBalance);
+    }
+
+    // withdraw funds from the account
+    function withdraw() {
+        var accountName = prompt("Enter account name:");
+        var amount = parseFloat(prompt("Enter amount to withdraw:"));
+
+        // Check input is valid
+        if (!accountName || isNaN(amount) || amount <= 0) {
+            alert("Invalid input. Please enter valid account name and withdrawal amount.");
+            return;
+        }
+
+        var currentBalance = parseFloat(localStorage.getItem(accountName));
+
+        // Check account exists
+        if (isNaN(currentBalance)) {
+            alert("Account does not exist.");
+            return;
+        }
+
+        // Check sufficient balance is available
+        if (amount > currentBalance) {
+            alert("Insufficient balance.");
+            return;
+        }
+
+        // balance and store in local storage
+        currentBalance -= amount;
+        localStorage.setItem(accountName, currentBalance);
+        alert("Withdrawal successful! New balance: " + currentBalance);
+    }
+
+    // display account balance
+    function displayBalance() {
+        var accountName = prompt("Enter account name:");
+        var currentBalance = parseFloat(localStorage.getItem(accountName));
+
+        // Check if account exists
+        if (isNaN(currentBalance)) {
+            alert("Account does not exist.");
+            return;
+        }
+
+        alert("Current balance: " + currentBalance);
+    }
+</script>
+
+</html>
